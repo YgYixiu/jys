@@ -25,11 +25,11 @@ export default {
   name: "App",
   data() {
     return {
-      'night_mode': '1'
+      'night_mode': '1',
     }
   },
-  created() {
-
+  async created() {
+    const tabs = await this.getTabs()
     document.title=this.$t('siteName');
     this.night_mode = localStorage.getItem('night_mode');
     this.$http({
@@ -46,7 +46,7 @@ export default {
             for (var i = 0; i < msg.length; i++) {
               arr_quota[i] = msg[i].quotation;
             }
-            const tabIndex = localStorage.getItem('tabIndex') || 0
+            const tabIndex = localStorage.getItem('tabIndex') || tabs[0].value
             const index = arr_quota[0].findIndex(item => item.currency_type === Number(tabIndex))
             console.log('app', index)
             if (!window.localStorage.getItem("downUp")) {
@@ -98,6 +98,20 @@ export default {
         .catch(error => {
           console.log(error);
         });
+  },
+  methods:{
+    getTabs(){
+      return this.$http.get("/api/currency/type").then((res)=>{
+        const {type,message} = res.data
+        if(type === 'ok'){
+          const intlKeys = ['forex', 'commodity', 'index', 'cryptocurrency']
+          return message.sort((a,b)=>a.sort-b.sort).map(item=>{
+            item.name = intlKeys[item.value]
+            return item
+          })
+        }
+      })
+    },
   }
 };
 </script>
