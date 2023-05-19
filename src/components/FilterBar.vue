@@ -1,7 +1,7 @@
 <template>
   <div class="filter-wrap" id="bgs">
     <div
-        :class="['filter-item', {active: filter.type === activeFilter}]"
+        :class="['filter-item', {active: filter.value === activeFilter}]"
         v-for="filter in filters" :key="filter.name"
         @click="handleFilter(filter)"
     >
@@ -16,30 +16,34 @@ export default {
   data(){
     return {
       filters: [
-        {
-          name: 'forex',
-          type: 0
-        },
-        {
-          name: 'commodity',
-          type: 1
-        },
-        {
-          name: 'index',
-          type: 2
-        },
-        {
-          name: 'cryptocurrency',
-          type: 3
-        },
+        // {
+        //   name: 'forex',
+        //   type: 0
+        // },
+        // {
+        //   name: 'commodity',
+        //   type: 1
+        // },
+        // {
+        //   name: 'index',
+        //   type: 2
+        // },
+        // {
+        //   name: 'cryptocurrency',
+        //   type: 3
+        // },
       ],
       activeFilter: 0
     }
   },
-  mounted(){
+  async mounted(){
+    await this.getTabs()
     const tabIndex = Number(localStorage.getItem('tabIndex'))
     if(tabIndex){
       this.activeFilter = tabIndex
+    } else{
+      const firstTab = this.filters[0]
+      localStorage.setItem('tabIndex', firstTab.value)
     }
   },
   watch: {
@@ -51,8 +55,20 @@ export default {
     }
   },
   methods:{
+    getTabs(){
+      return this.$http.get("/api/currency/type").then((res)=>{
+        const {type,message} = res.data
+        if(type === 'ok'){
+          const intlKeys = ['forex', 'commodity', 'index', 'cryptocurrency']
+          this.filters = message.sort((a,b)=>a.sort-b.sort).map(item=>{
+            item.name = intlKeys[item.value]
+            return item
+          })
+        }
+      })
+    },
     handleFilter(obj){
-      const {type} = obj
+      const {value:type} = obj
       this.activeFilter = type
       localStorage.setItem('tabIndex', type)
     },

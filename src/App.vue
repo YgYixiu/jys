@@ -46,13 +46,16 @@ export default {
             for (var i = 0; i < msg.length; i++) {
               arr_quota[i] = msg[i].quotation;
             }
+            const tabIndex = localStorage.getItem('tabIndex') || 0
+            const index = arr_quota[0].findIndex(item => item.currency_type === Number(tabIndex))
+            console.log('app', index)
             if (!window.localStorage.getItem("downUp")) {
-              window.localStorage.setItem("downUp", arr_quota[0][0].change);
+              window.localStorage.setItem("downUp", arr_quota[0][index].change);
             }
             if (!window.localStorage.getItem("legal_id_cur")) {
               window.localStorage.setItem(
                   "legal_id_cur",
-                  arr_quota[0][0].currency_id
+                  arr_quota[0][index].currency_id
               );
             }
             if (
@@ -63,27 +66,27 @@ export default {
             ) {
               window.localStorage.setItem(
                   "legal_id",
-                  msg[0].quotation[0].legal_id
+                  msg[0].quotation[index].legal_id
               );
               window.localStorage.setItem(
                   "currency_id",
-                  msg[0].quotation[0].currency_id
+                  msg[0].quotation[index].currency_id
               );
               window.localStorage.setItem(
                   "legal_name",
-                  msg[0].quotation[0].legal_name
+                  msg[0].quotation[index].legal_name
               );
               window.localStorage.setItem(
                   "currency_name",
-                  msg[0].quotation[0].currency_name
+                  msg[0].quotation[index].currency_name
               );
               var symbol =
-                  msg[0].quotation[0].currency_name +
+                  msg[0].quotation[index].currency_name +
                   "/" +
-                  msg[0].quotation[0].legal_name;
+                  msg[0].quotation[index].legal_name;
               window.localStorage.setItem(
                   "shareNum",
-                  msg[0].quotation[0].lever_share_num
+                  msg[0].quotation[index].lever_share_num
               );
               // var priceScale=Math.pow(10,5);
               var priceScale = 100000;

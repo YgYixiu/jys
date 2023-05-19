@@ -11,7 +11,8 @@
     <p v-show="false">{{ CountDown }}</p>
     <ul class="list_head ft14">
       <li class="flex between">
-        <span class="width3 tls">{{ $t('miscro.symbol') }}</span>
+        <span class="width2 tls">{{ $t('miscro.symbol') }}</span>
+        <span class="width2">{{ $t('time') }}</span>
         <span class="width1">{{ $t('miscro.num') }}</span>
         <span class="width2">{{ $t('miscro.buyPrice') }}</span>
         <span class="width2" v-if="status == 1">{{ $t('lever.nowPrice') }}</span>
@@ -29,12 +30,13 @@
           v-for="(item,index) in orderList"
           :key="index"
           class="flex between">
-        <span class="width3 tls">{{ item.symbol_name }} {{ item.seconds }}s</span>
+        <span class="width2 tls">{{ item.symbol_name }} {{ item.seconds }}s</span>
+        <span class="width2"> {{ item.created_at }}</span>
         <span class="width1">{{ item.number || '0' | numFilters(0) }} {{ item.currency_name }}</span>
         <span class="width2">
           {{ item.open_price || '0.00' | numFilters(4) }}
           <i
-              v-if="item.type == 1"
+              v-if="item.type == 2"
               class="iconfont icon-jiantouarrow499 red"
           ></i>
           <i v-else class="iconfont icon-jiantouarrow499 green"

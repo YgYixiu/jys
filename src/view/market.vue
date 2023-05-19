@@ -59,8 +59,8 @@ export default {
       legal_index: this.$route.params.legal_index,
       currency_index: this.$route.params.currency_index,
       tradeDatas: "",
-      index2: 0,
-      index1: 0,
+      index2: 0, // quptation
+      index1: 0, // message
       dataList: [],
       selectedId: "",
       shareNum: '',
