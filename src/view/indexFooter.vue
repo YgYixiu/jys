@@ -37,17 +37,23 @@
         </div>
       </div> -->
       <div class="fedui-footer-right-number" style="margin:0 auto">
+        <div class="fedui-footer-logo">
+          <img width="80" height="auto" src="@/assets/images/logo.png" alt="">
+        </div>
         <div class="box-num-box">
+          <div class="ft16">{{ $t('footer.about') }}</div>
           <div v-for="(item, key) in footSecond2" :key="'ids' + key" class="box-tiem-s" @click="goDetail(item.id)">
             {{ item.title }}
           </div>
         </div>
         <div class="box-num-box">
+          <div>{{ $t('footer.explain') }}</div>
           <div v-for="(item, key) in footFrist2" :key="'sid' + key" class="box-tiem-s" @click="goDetail(item.id)">
             {{ item.title }}
           </div>
         </div>
         <div class="box-num-box">
+          <div>{{ $t('footer.support') }}</div>
           <div v-for="(item, key) in footContract" :key="'kid' + key" class="box-tiem-s" @click="goDetail(item.id)">
             {{ item.title }}
           </div>
@@ -306,32 +312,32 @@ export default {
 
 .fedui-footer-right-number {
   display: flex;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
+  // text-align: center;
   flex-direction: row;
-  align-items: center;
+  // align-items: center;
   //  background: #ff0000;
-  height: 50px;
+  // height: 50px;
   width: 100% !important;
 }
 
 .box-num-box {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  flex-direction: row;
-  align-items: center;
+  // display: flex;
+  // justify-content: center;
+  // text-align: center;
+  // flex-direction: row;
+  // align-items: center;
   // margin-right: 15px;
 }
 
 .box-tiem-s {
   display: flex;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
   padding-bottom: 5px;
   padding-top: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
+  // padding-left: 10px;
+  // padding-right: 10px;
   border-radius: 6px;
   font-size: 16px;
   color: #9999d4;

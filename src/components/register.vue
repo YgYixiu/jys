@@ -4,56 +4,69 @@
         <div class="main-register ">
             <div class="flex" style="max-width: 1200px; margin: 0 auto;">
                 <div class="reg-content" style="min-height: 700px; width:620px;">
-                    <div class="title">{{ $t('regidters') }}</div>
-                    <el-radio-group v-if="false" v-model="isMobile" @change="changeMode" style="margin:15px 0;">
-                        <el-radio-button label="phone">{{$t('register.phone')}}</el-radio-button>
-                        <el-radio-button label="email">{{ $t('register.email') }}</el-radio-button>
+                    <div class="title">{{ $t("regidters") }}</div>
+                    <el-radio-group v-if="true" v-model="isMobile" @change="changeMode" style="margin:15px 0;">
+                        <el-radio-button label="phone">{{
+                            $t("register.phone")
+                        }}</el-radio-button>
+                        <el-radio-button label="email">{{
+                            $t("register.email")
+                        }}</el-radio-button>
                     </el-radio-group>
                     <div class="step-one" v-show="true">
                         <div class="account-box hide">
-                            <div class="tip">{{ $t('register01.country') }}</div>
-                            <el-select v-model="countryS" style="background-color: #181d25; width: 520px; color: #c7cce6;border: 0px solid #4e5b85">
-                                <el-option v-for="(item,index) in country" :label="item.name_en" :value="item.country_id" :key="index"></el-option>
+                            <div class="tip">{{ $t("register01.country") }}</div>
+                            <el-select v-model="countryS"
+                                style="background-color: #181d25; width: 520px; color: #c7cce6;border: 0px solid #4e5b85">
+                                <el-option v-for="(item, index) in country" :label="item.name_en" :value="item.country_id"
+                                    :key="index"></el-option>
                             </el-select>
                         </div>
                         <div class="account-box">
-                            <div class="tip" v-if="isMb">{{ $t('lay.nophone') }}</div>
-                            <div class="tip" v-if="!isMb">{{ $t('lay.nemail') }}</div>
+                            <div class="tip" v-if="isMb">{{ $t("lay.nophone") }}</div>
+                            <div class="tip" v-if="!isMb">{{ $t("lay.nemail") }}</div>
                             <div class="flex">
-                                <select style="background-color: #1e2235;color: #c7cce6;border: 1px solid #4e5b85" name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
-                                    <option :value="index" v-for="(item,index) in country" :key="index">{{ item.area_code }}
+                                <select style="background-color: #1e2235;color: #c7cce6;border: 1px solid #4e5b85" name=""
+                                    v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
+                                    <option :value="index" v-for="(item, index) in country" :key="index">{{ item.area_code
+                                    }}
                                         {{ item.name_en }}
                                     </option>
                                 </select>
-                                <input type="text" v-if="isMb" v-model="account" class="phone">
-                                <input type="text" v-if="!isMb" :placeholder="$t('register.emailnum')" v-model="account" class="">
+                                <input type="text" v-if="isMb" v-model="account" class="phone" />
+                                <input type="text" v-if="!isMb" :placeholder="$t('register.emailnum')" v-model="account"
+                                    class="" />
                             </div>
                         </div>
-                        <div class="tip" v-if="true" style="margin-bottom:10px">{{ $t('register.codenum') }}</div>
-                        <div class="code-box" v-if="true">
-                            <input type="number" :placeholder="$t('register.codenum')" :readonly="readonly" @click="readonly=false" v-model="code" class="code">
-                            <button type='button' class="code-btn curPer" @click="sendCode">{{ sendCodeText }}</button>
+                        <div class="tip" v-if="isMb" style="margin-bottom:10px">
+                            {{ $t("register.codenum") }}
                         </div>
-                        <button class="confirm-btn curPer" v-if="false" @click="checkCode" type="button">{{
-                            $t('confirm')
-                            }}
+                        <div class="code-box" v-if="isMb">
+                            <input type="number" :placeholder="$t('register.codenum')" :readonly="readonly"
+                                @click="readonly = false" v-model="code" class="code" />
+                            <button type="button" class="code-btn curPer" @click="sendCode">
+                                {{ sendCodeText }}
+                            </button>
+                        </div>
+                        <button class="confirm-btn curPer" v-if="false" @click="checkCode" type="button">
+                            {{ $t("confirm") }}
                         </button>
                     </div>
                     <div class="pwd-box">
-                        <div class="tip">{{ $t('register.logpwd') }}</div>
-                        <input type="password" v-model="pwd" class="pwd-input" :placeholder="$t('register.pwd')">
+                        <div class="tip">{{ $t("register.logpwd") }}</div>
+                        <input type="password" v-model="pwd" class="pwd-input" :placeholder="$t('register.pwd')" />
                     </div>
                     <div class="repwd-box">
-                        <div class="tip">{{ $t('register.repwd') }}</div>
-                        <input type="password" v-model="repwd" class="repwd-input" :placeholder="$t('register.repwd')">
+                        <div class="tip">{{ $t("register.repwd") }}</div>
+                        <input type="password" v-model="repwd" class="repwd-input" :placeholder="$t('register.repwd')" />
                     </div>
-                      <div class="repwd-box">
-                        <div class="tip">{{ $t('pass1') }}</div>
-                        <input type="password" v-model="withdraw_password" class="repwd-input" :placeholder="$t('pass1')">
+                    <div class="repwd-box">
+                        <div class="tip">{{ $t("pass1") }}</div>
+                        <input type="password" v-model="withdraw_password" class="repwd-input" :placeholder="$t('pass1')" />
                     </div>
                     <div class="invite-box">
-                        <div class="tip">{{ $t('register.invitecode') }}</div>
-                        <input type="text" v-model="invite" class="invite-input" :placeholder="$t('register.invitecode')">
+                        <div class="tip">{{ $t("register.invitecode") }}</div>
+                        <input type="text" v-model="invite" class="invite-input" :placeholder="$t('register.invitecode')" />
                     </div>
                     <div id="codess">
                         <codes ref="codess" :title="$t('login_codes1')" :title1="$t('login_codes2')"></codes>
@@ -62,20 +75,22 @@
                     <div class="flex column">
                         <div>
                             <el-checkbox v-model="agree"> </el-checkbox>
-                            <span @click='xieyis' style="padding-left:10px">
+                            <span @click="xieyis" style="padding-left:10px">
                                 {{ $t("xieyi") }}
                             </span>
                         </div>
-                        <button type="button" style="border-radius: 4px;" @click="register" class="reg-btn confirm-btn curPer">
-                            {{ $t('registers') }}
+                        <button type="button" style="border-radius: 4px;" @click="register"
+                            class="reg-btn confirm-btn curPer">
+                            {{ $t("registers") }}
                         </button>
                     </div>
                 </div>
-                <div class="fColor2" style="padding-top:120px; font-weight: normal; font-size: 14px; line-height: 50px; flex:1; text-align: left;">
-                    <div>{{ $t('xieyi1.first') }}</div>
-                    <div>{{ $t('xieyi1.second') }}</div>
-                    <div>{{ $t('xieyi1.third') }}</div>
-                    <div>{{ $t('xieyi1.fourth') }}</div>
+                <div class="fColor2"
+                    style="padding-top:120px; font-weight: normal; font-size: 14px; line-height: 50px; flex:1; text-align: left;">
+                    <div>{{ $t("xieyi1.first") }}</div>
+                    <div>{{ $t("xieyi1.second") }}</div>
+                    <div>{{ $t("xieyi1.third") }}</div>
+                    <div>{{ $t("xieyi1.fourth") }}</div>
                 </div>
             </div>
         </div>
@@ -83,46 +98,45 @@
     </div>
 </template>
 <script>
-import country from '../lib/country.js'
+import country from "../lib/country.js";
 import indexHeader from "@/view/indexHeader";
 import indexFooter from "@/view/indexFooter";
-import codes from '@/components/codes'
+import codes from "@/components/codes";
 export default {
     components: {
         indexHeader,
         indexFooter,
-        codes
+        codes,
     },
     data() {
         return {
-            isMobile: 'email',
+            isMobile: "email",
             agree: false,
             readonly: true,
-            sendCodeText: this.$t('register.sendcode'),
+            sendCodeText: this.$t("register.sendcode"),
             sendCodeTime: 60,
             areaCode: 0,
             codeTrue: false, //验证码是否正确
             isMb: false, //是否为手机注册
             account: "", //用户名
             pwd: "", //密码
-            withdraw_password:'',
+            withdraw_password: "",
             repwd: "", //重复密码
             code: "", //验证码
             invite: "", //邀请码
             timer: "", //倒计时timer
             showList: false, //是否显示地址列表
             country: country,
-            province: { id: "", name: this.$t('legaltrade.select') }, //所选省份
+            province: { id: "", name: this.$t("legaltrade.select") }, //所选省份
             provinces: [], //省份列表
-            city: { id: "", name: this.$t('legaltrade.select') }, //所选城市
+            city: { id: "", name: this.$t("legaltrade.select") }, //所选城市
             cities: [], //城市列表
-            district: { id: "", name: this.$t('legaltrade.select') }, //所选地区
+            district: { id: "", name: this.$t("legaltrade.select") }, //所选地区
             districts: [], //地区列表
-            countryS: ''
+            countryS: "",
         };
     },
     created() {
-
         var invite = this.get_all_params().extension_code;
         if (invite) {
             this.invite = invite;
@@ -134,7 +148,6 @@ export default {
         if (account) {
             var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
             if (!emreg.test(account)) {
-
             } else {
                 this.account = account;
             }
@@ -142,30 +155,33 @@ export default {
     },
     methods: {
         xieyis() {
-
             layer.open({
-                area: ['800px', '600px'],
-                title: this.$t('xieyi'),
-                content: this.$t('re_xieyi'),
+                area: ["800px", "600px"],
+                title: this.$t("xieyi"),
+                content: this.$t("re_xieyi"),
                 btn: [],
                 scrollbar: false,
-
             });
         },
 
         changeMode(value) {
             // console.log(value);
-            this.isMb = value === 'phone';
+            this.isMb = value === "phone";
             // console.log(this.isMb);
         },
         get_all_params() {
             var url = location.href;
             var nameValue;
-            var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+            var paraString = url
+                .substring(url.indexOf("?") + 1, url.length)
+                .split("&");
             var paraObj = {};
-            for (var i = 0; nameValue = paraString[i]; i++) {
+            for (var i = 0; (nameValue = paraString[i]); i++) {
                 var name = nameValue.substring(0, nameValue.indexOf("=")).toLowerCase();
-                var value = nameValue.substring(nameValue.indexOf("=") + 1, nameValue.length);
+                var value = nameValue.substring(
+                    nameValue.indexOf("=") + 1,
+                    nameValue.length
+                );
                 if (value.indexOf("#") > -1) {
                     value = value.split("#")[0];
                 }
@@ -190,7 +206,7 @@ export default {
                     return;
                 }
             }
-            var pId = '';
+            var pId = "";
             //  if(id != ''){
             //    data.parent_id = id;
             //  }
@@ -211,14 +227,14 @@ export default {
             this.provinces = [];
             this.cities = [];
             this.districts = [];
-            this.province = { id: "", name: this.$t('legaltrade.select') };
-            this.city = { id: "", name: this.$t('legaltrade.select') };
-            this.district = { id: "", name: this.$t('legaltrade.select') };
+            this.province = { id: "", name: this.$t("legaltrade.select") };
+            this.city = { id: "", name: this.$t("legaltrade.select") };
+            this.district = { id: "", name: this.$t("legaltrade.select") };
 
             clearInterval(this.timer);
             var codeBtn = document.querySelector(".code-btn");
             codeBtn.disabled = false;
-            codeBtn.innerHTML = this.$t('code');
+            codeBtn.innerHTML = this.$t("code");
         },
         // 发送验证码
         sendCode(e) {
@@ -226,7 +242,7 @@ export default {
             let isMb = this.isMb;
             let url = "sms_send";
             if (this.account == "") {
-                this.$message.error(that.$t('lay.paccount'));
+                this.$message.error(that.$t("lay.paccount"));
                 return;
             } else if (e.target.disabled) {
                 return;
@@ -239,46 +255,47 @@ export default {
             } else if (!isMb) {
                 var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
                 if (!emreg.test(this.account)) {
-                    this.$message.error(this.$t('register.emailnum'));
+                    this.$message.error(this.$t("register.emailnum"));
                     return;
                 } else {
                     url = "sms_mail";
                 }
-            } else {}
+            } else {
+            }
 
             let data = { user_string: this.account };
-            if (url == 'sms_send') {
-                data.country_code = country[this.areaCode].area_code
+            if (url == "sms_send") {
+                data.country_code = country[this.areaCode].area_code;
             }
 
             const loading = this.$loading({
                 lock: true,
-                text: 'Loading',
-                spinner: 'el-icon-loading',
-                background: 'rgba(0, 0, 0, 0.7)'
+                text: "Loading",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)",
             });
 
             this.$http({
                 url: "/api/" + url,
                 method: "post",
-                data: data
-            }).then(res => {
+                data: data,
+            }).then((res) => {
                 loading.close();
-                if (res.data.type != 'error') {
+                if (res.data.type != "error") {
                     // var time = 60;
                     this.$message({
                         message: res.data.message,
-                        type: 'success'
+                        type: "success",
                     });
                     that.sendCodeTime = 60;
-                    this.timer = setInterval(function() {
+                    this.timer = setInterval(function () {
                         that.sendCodeTime--;
                         that.sendCodeText = that.sendCodeTime + "s";
                         // e.target.innerHTML = time + "s";
                         // e.target.disabled = true;
                         if (that.sendCodeTime == 0) {
                             window.clearInterval(that.timer);
-                            that.sendCodeText = that.$t('register.sendcode');
+                            that.sendCodeText = that.$t("register.sendcode");
                             // e.target.innerHTML = that.$t('code');
                             // e.target.disabled = false;
                             return;
@@ -292,24 +309,27 @@ export default {
         // 验证验证码
         checkCode() {
             let code = this.code;
-            if (this.account == '') {
-                layer.msg(this.$t('lay.paccount'));
+            if (this.account == "") {
+                layer.msg(this.$t("lay.paccount"));
                 return;
             } else if (this.code == "") {
-                layer.msg(this.$t('lay.notcode'));
+                layer.msg(this.$t("lay.notcode"));
                 return;
             } else {
-
                 if (!this.isMb) {
-                    if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.account)) {
-                        layer.msg(this.$t('register.emailnum'));
+                    if (
+                        !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
+                            this.account
+                        )
+                    ) {
+                        layer.msg(this.$t("register.emailnum"));
                         return;
                     }
                 } else {
-                    if (!/^1[0-9]{10}$/.test(this.account)) {
-                        layer.msg('please enter a valid phone number');
-                        return;
-                    }
+                    // if (!/^1[0-9]{10}$/.test(this.account)) {
+                    //     layer.msg('please enter a valid phone number');
+                    //     return;
+                    // }
                 }
                 let data = {};
                 let url = "user/check_email";
@@ -323,21 +343,20 @@ export default {
                 this.$http({
                     url: "/api/" + url,
                     method: "post",
-                    data: data
-                }).then(res => {
+                    data: data,
+                }).then((res) => {
                     layer.msg(res.data.message);
 
                     if (res.data.type == "ok") {
                         this.codeTrue = true;
                         this.getRegion("", "provinces");
-                    } else {}
+                    } else {
+                    }
                 });
             }
         },
         // 注册
-        register() {
-
-
+        async register() {
             var that = this;
 
             if (!this.agree) {
@@ -346,117 +365,124 @@ export default {
             }
 
             let code = this.code;
-            if (this.account == '') {
-                this.$message.warning(this.$t('lay.paccount'));
+            if (this.account == "") {
+                this.$message.warning(this.$t("lay.paccount"));
                 return;
-            } else if (this.code == "") {
-                this.$message.warning(this.$t('lay.notcode'));
+            } else if (this.code == "" && this.isMb) {
+                this.$message.warning(this.$t("lay.notcode"));
                 return;
             } else {
 
-                if (!this.isMb) {
-                    if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.account)) {
-                        this.$message.warning(this.$t('register.emailnum'));
-                        return;
-                    }
-                } else {
-                    if (!/^1[0-9]{10}$/.test(this.account)) {
-                        this.$message.warning('please enter a valid phone number');
-                        return;
-                    }
-                }
-
-                let data = {};
-                let url = "user/check_email";
                 if (this.isMb) {
-                    data = { mobile_code: this.code };
-                    url = "user/check_mobile";
-                } else {
-                    data = { email_code: this.code };
+                    const res = await this.check()
+                    if (res.data.type !== 'ok') {
+                        this.$message.error(res.data.message);
+                        return
+                    }
                 }
+                // layer.msg(res.data.message);
 
-                if (!this.$refs.codess.get_code_status()) {
-                    that.$message.warning(this.$t('login_codes3'));
+                if (that.pwd == "") {
+                    that.$message.warning(that.$t("lay.inpwd"));
+                    return;
+                } else if (that.pwd.length < 6 || that.pwd.length > 16) {
+                    that.$message.warning(that.$t("lay.pwdlength"));
+                    return;
+                } else if (that.repwd == "") {
+                    that.$message.warning(that.$t("lay.repwd"));
+                    return;
+                } else if (that.pwd !== this.repwd) {
+                    that.$message.warning(that.$t("lay.twopwd"));
                     return;
                 }
 
+                //  else if (that.invite == '') {
+                //   that.$message.warning(that.$t('register.invitecode'));
+                //   return;
+                // }
+                var data = {};
+                var isMb = that.isMb;
+                data.type = isMb ? "mobile" : "email";
+                data.user_string = that.account;
+                data.code = that.code;
+                data.password = that.pwd;
+                data.re_password = that.repwd;
+                data.extension_code = that.invite;
+                data.country_code = country[that.areaCode].area_code;
+                data.withdraw_password = that.withdraw_password;
 
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                });
-
-                this.$http({
-                    url: "/api/" + url,
-                    method: "post",
-                    data: data
-                }).then(res => {
-                    loading.close();
-                    // layer.msg(res.data.message);
-
-                    if (res.data.type == "ok") {
-
-                        if (that.pwd == "") {
-                            that.$message.warning(that.$t('lay.inpwd'));
-                            return;
-                        } else if (that.pwd.length < 6 || that.pwd.length > 16) {
-                            that.$message.warning(that.$t('lay.pwdlength'));
-                            return;
-                        } else if (that.repwd == "") {
-                            that.$message.warning(that.$t('lay.repwd'));
-                            return;
-                        } else if (that.pwd !== this.repwd) {
-                            that.$message.warning(that.$t('lay.twopwd'));
-                            return;
+                that
+                    .$http({
+                        url: "/api/" + "user/register",
+                        data: data,
+                        method: "post",
+                    })
+                    .then((res) => {
+                        if (res.data.type == "ok") {
+                            that.$message({
+                                message: res.data.message,
+                                type: "success",
+                            });
+                            that.$router.push("/components/login");
+                        } else {
+                            that.$message.error(res.data.message);
                         }
-
-                        //  else if (that.invite == '') {
-                        //   that.$message.warning(that.$t('register.invitecode'));
-                        //   return;
-                        // }
-                        var data = {};
-                        var isMb = that.isMb;
-                        data.type = isMb ? "mobile" : "email";
-                        data.user_string = that.account;
-                        data.code = that.code;
-                        data.password = that.pwd;
-                        data.re_password = that.repwd;
-                        data.extension_code = that.invite;
-                        data.country_code = country[that.areaCode].area_code;
-                        data.withdraw_password=that.withdraw_password
-
-                        that.$http({
-                            url: "/api/" + "user/register",
-                            data: data,
-                            method: "post"
-                        }).then(res => {
-                            loading.close();
-                            if (res.data.type == "ok") {
-                                that.$message({
-                                    message: res.data.message,
-                                    type: 'success'
-                                });
-                                that.$router.push("/components/login");
-                            } else {
-                                that.$message.error(res.data.message);
-                            }
-                        });
-
-
-                    } else {
-                        loading.close();
-                        this.$message.error(res.data.message);
-                    }
-                });
+                    });
+            }
+        },
+        check() {
+            if (!this.isMb) {
+                if (
+                    !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
+                        this.account
+                    )
+                ) {
+                    this.$message.warning(this.$t("register.emailnum"));
+                    return;
+                }
+            } else {
+                // if (!/^1[0-9]{10}$/.test(this.account)) {
+                //     this.$message.warning('please enter a valid phone number');
+                //     return;
+                // }
             }
 
-        }
-    }
+            let data = {};
+            let url = "user/check_email";
+            if (this.isMb) {
+                data = { mobile_code: this.code };
+                url = "user/check_mobile";
+            } else {
+                data = { email_code: this.code };
+            }
+
+            if (!this.$refs.codess.get_code_status()) {
+                that.$message.warning(this.$t("login_codes3"));
+                return;
+            }
+
+            const loading = this.$loading({
+                lock: true,
+                text: "Loading",
+                spinner: "el-icon-loading",
+                background: "rgba(0, 0, 0, 0.7)",
+            });
+            return this.$http({
+                url: "/api/" + url,
+                method: "post",
+                data: data,
+            }).then((res) => {
+                return res
+            }).catch(e => {
+                console.log(e);
+            }).finally(() => {
+                loading.close()
+            })
+        },
+    },
 };
 </script>
-<style lang='scss'>
+<style lang="scss">
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner {
     border-color: #00a4d8 !important;
@@ -515,10 +541,9 @@ export default {
 }
 
 #register-box {
-
-
     .main-register {
-        background: url(../../static/imgs/bg_login.png) center top repeat-x, -webkit-linear-gradient(top, #181d25, #181d25);
+        background: url(../../static/imgs/bg_login.png) center top repeat-x,
+            -webkit-linear-gradient(top, #181d25, #181d25);
         min-height: 100%;
     }
 
@@ -648,7 +673,6 @@ export default {
 }
 
 .day {
-
     #register-box {
         background: #ffffff;
 
@@ -671,6 +695,5 @@ export default {
     .main_title {
         color: #484f73;
     }
-
 }
 </style>

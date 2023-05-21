@@ -1,7 +1,7 @@
 <template>
-  <div class="filter-wrap" id="bgs">
+  <div :class="['filter-wrap',{large: size === 'large'}]" id="bgs">
     <div
-        :class="['filter-item', {active: filter.value === activeFilter}]"
+        :class="['filter-item', {active: filter.value === activeFilter}, {underline: underline}]"
         v-for="filter in filters" :key="filter.name"
         @click="handleFilter(filter)"
     >
@@ -13,6 +13,16 @@
 <script>
 export default {
   name: 'FilterBar',
+  props:{
+    size: {
+      type: String,
+      default: ''
+    },
+    underline: {
+      type: Boolean,
+      default: true
+    }
+  },
   data(){
     return {
       filters: [
@@ -87,13 +97,21 @@ export default {
   display: flex;
   // align-items: center;
   // justify-content: space-between;
+  &.large{
+    font-size: 16px;
+    .filter-item{
+      padding: 6px 20px;
+    }
+  }
 }
 .filter-item{
   padding: 6px;
   white-space: nowrap;
   &.active{
     color: #00a4d8;
-    border-bottom: 2px solid #1da2b4;
+    &.underline{
+      border-bottom: 2px solid #1da2b4;
+    }
   }
 }
 </style>

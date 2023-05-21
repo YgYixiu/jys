@@ -6,7 +6,9 @@
 <script>
 import ECharts from 'vue-echarts'; // 在 webpack 环境下指向 components/ECharts.vue
 import echarts from 'echarts';
+import axios from 'axios'
 
+const CancelToken = axios.CancelToken;
 export default {
   props: {
     symbol: {
@@ -94,7 +96,8 @@ export default {
             }
           }
         ]
-      }
+      },
+      cancel: null
     };
   },
   components: {
@@ -114,15 +117,18 @@ export default {
     let that = this;
     let now = parseInt(new Date().valueOf() / 1000);
     let start = now - 3600 * 24 * 7;
-    console.log(114);
     this.$http
       .get('/api/currency/new_timeshar', {
         params: {
           symbol: this.symbol + '/USDT',
           from: start,
           to: parseInt(new Date().valueOf() / 1000),
-          period: this.peorid
-        }
+          period: this.peorid,
+        },
+        cancelToken: new CancelToken((c) => {
+          // An executor function receives a cancel function as a parameter
+          this.cancel = c;
+        })
       })
       .then((res) => {
         let rsp = res.data;
@@ -144,6 +150,9 @@ export default {
         that.polar.xAxis.data = data;
         that.polar.series[0].data = data1;
       });
+  },
+  beforeDestroy() {
+    this.cancel()
   }
 };
 </script>

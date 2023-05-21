@@ -65,6 +65,7 @@
             <button class="btn">
               USDT
             </button> -->
+            <FilterBar size="large" :underline="false" @change="currencyChange"></FilterBar>
           </div>
           <div class="coinbox ft12 rbom">
             <div class="flex classfity txtgray">
@@ -89,9 +90,9 @@
               <div class="flex"><span>{{ $t('market.zoushi') }}</span>
               </div>
             </div>
-
+            <template v-if="currency_type !== null">
             <div class="flex coinlist alcenter curPer hove" style=""
-                 v-for="item in quotationList" :key="item.id" v-if="item.is_display == 1">
+                 v-for="item in renderList" :key="item.id" v-if="item.is_display == 1">
               <p class="flex alcenter">
                 <span class="iconfont icon-star ft14 gray"></span>
                 <img style="width: 20px; margin: 0 10px;" :src="item.logo">
@@ -112,7 +113,7 @@
               </span>
               </p>
             </div>
-
+          </template>
             <!---->
 
           </div>
@@ -142,7 +143,7 @@
         <ul class="info-list" style="width:88%; max-width: 1300px; display: flex;">
           <li>
             <div><img
-                src="/upload/01@2x.65e9ae17.png"
+                src="@/assets/images/index/safe.png"
                 alt=""></div>
             <p class="title">{{ $t('home.dsp1') }}</p>
             <p>{{ $t('home.dsp10') }}</p>
@@ -150,19 +151,19 @@
 
           <li>
             <div><img data-v-0ba0193f=""
-                      src="/upload/02@2x.6ac62dc2.png"
+                      src="@/assets/images/index/quick.png"
                       alt=""></div>
             <p class="title">{{ $t('home.dsp2') }}</p>
             <p>{{ $t('home.dsp20') }}</p></li>
           <li>
             <div><img
-                src="/upload/03@2x.743bc9dd.png"
+                src="@/assets/images/index/global.png"
                 alt=""></div>
             <p class="title">{{ $t('home.dsp3') }}</p>
             <p>{{ $t('home.dsp30') }}</p></li>
           <li>
             <div><img
-                src="/upload/04@2x.d1045c9a.png"
+                src="@/assets/images/index/good.png"
                 alt=""></div>
             <p class="title">{{ $t('home.dsp4') }}</p>
             <p>{{ $t('home.dsp40') }}</p></li>
@@ -423,12 +424,13 @@ import "@/assets/style/index.css";
 import "@/assets/style/animate.min.css";
 import "swiper/css/swiper.css";
 import ChartBox from "@/view/chartBox"
-
+import FilterBar from '@/components/FilterBar'
 
 import {Swiper, SwiperSlide, directive} from 'vue-awesome-swiper'
 import vueSeamlessScroll from 'vue-seamless-scroll'
 
 import indexHeader from "@/view/indexHeader";
+
 
 export default {
   name: "homeContent",
@@ -437,7 +439,8 @@ export default {
     Swiper,
     SwiperSlide,
     vueSeamlessScroll,
-    ChartBox
+    ChartBox,
+    FilterBar
   },
   filters: {
     numFilters: function (value, num) {
@@ -483,7 +486,8 @@ export default {
       quotationList: [],
       username: '',
       lang: 'zh',
-      timer: null
+      timer: null,
+      currency_type: null
     };
   },
   created() {
@@ -492,7 +496,6 @@ export default {
     this.lang = window.localStorage.getItem('lang');
   },
   mounted() {
-
     this.connect();
     this.getNews();
     this.getLunbo();
@@ -509,9 +512,18 @@ export default {
       return {
         direction: 2,
       }
+    },
+    renderList(){
+      if(this.currency_type === null){
+        return []
+      }
+      return this.quotationList.filter(item=>item.currency_type === this.currency_type)
     }
   },
   methods: {
+    currencyChange(type){
+      this.currency_type = type
+    },
     show_wenti(index){
      if( this.wenti_list[index].status){
         this.wenti_list[index].status=false
